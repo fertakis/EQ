@@ -16,6 +16,8 @@ namespace EQ.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public string Name { get; set; }
+        public string Surname { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
