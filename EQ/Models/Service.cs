@@ -23,9 +23,10 @@ namespace EQ.Models
         public int ServiceId { get; set; }
         public string Name { get; set; }
         public string Telephone { get; set; }
-        public Nullable<int> ServicePointsId { get; set; }
+        public string Address { get; set; }
+        public Nullable<int> CurrentTicket { get; set; }
+        public Nullable<int> LastTicket { get; set; }
     
-        public virtual ServicePoint ServicePoint { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

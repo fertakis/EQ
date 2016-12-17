@@ -10,20 +10,16 @@
         <EntityTypeShape EntityType="EQModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EQModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EQModel.AspNetUser" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EQModel.ServicePoint" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EQModel.Service" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EQModel.Service" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="EQModel.State" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EQModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EQModel.Ticket" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="EQModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EQModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EQModel.FK_Tickets_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="EQModel.FK_Services_ServicePoints" ManuallyRouted="false" />
-        <AssociationConnector Association="EQModel.FK_Tickets_ServicePoints" ManuallyRouted="false" />
         <AssociationConnector Association="EQModel.FK_Tickets_Services" ManuallyRouted="false" />
         <AssociationConnector Association="EQModel.FK_Tickets_State" ManuallyRouted="false" />
         <AssociationConnector Association="EQModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="EQModel.FK_ServicePoints_Tickets1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

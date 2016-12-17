@@ -68,22 +68,16 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Surname" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="ServicePoints">
-          <Key>
-            <PropertyRef Name="ServicePointsId" />
-          </Key>
-          <Property Name="ServicePointsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="CurrentTicket" Type="int" />
-        </EntityType>
         <EntityType Name="Services">
           <Key>
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="10" />
-          <Property Name="Telephone" Type="nchar" MaxLength="10" />
-          <Property Name="ServicePointsId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="20" />
+          <Property Name="CurrentTicket" Type="int" />
+          <Property Name="LastTicket" Type="int" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -107,13 +101,12 @@
             <PropertyRef Name="TicketId" />
           </Key>
           <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TicketNumber" Type="int" Nullable="false" />
           <Property Name="AspNetUserId" Type="nvarchar" MaxLength="128" />
           <Property Name="ServiceId" Type="int" />
           <Property Name="Timestamp" Type="datetime" />
           <Property Name="TimeServed" Type="datetime" />
           <Property Name="StateId" Type="int" />
-          <Property Name="ServicePointsId" Type="int" />
+          <Property Name="TicketNumber" Type="int" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -171,30 +164,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ServicePoints_Tickets1">
-          <End Role="Tickets" Type="Self.Tickets" Multiplicity="0..1" />
-          <End Role="ServicePoints" Type="Self.ServicePoints" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tickets">
-              <PropertyRef Name="TicketId" />
-            </Principal>
-            <Dependent Role="ServicePoints">
-              <PropertyRef Name="CurrentTicket" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Services_ServicePoints">
-          <End Role="ServicePoints" Type="Self.ServicePoints" Multiplicity="0..1" />
-          <End Role="Services" Type="Self.Services" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServicePoints">
-              <PropertyRef Name="ServicePointsId" />
-            </Principal>
-            <Dependent Role="Services">
-              <PropertyRef Name="ServicePointsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tickets_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
@@ -204,18 +173,6 @@
             </Principal>
             <Dependent Role="Tickets">
               <PropertyRef Name="AspNetUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tickets_ServicePoints">
-          <End Role="ServicePoints" Type="Self.ServicePoints" Multiplicity="0..1" />
-          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServicePoints">
-              <PropertyRef Name="ServicePointsId" />
-            </Principal>
-            <Dependent Role="Tickets">
-              <PropertyRef Name="ServicePointsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -250,7 +207,6 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ServicePoints" EntityType="Self.ServicePoints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -271,20 +227,8 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_ServicePoints_Tickets1" Association="Self.FK_ServicePoints_Tickets1">
-            <End Role="Tickets" EntitySet="Tickets" />
-            <End Role="ServicePoints" EntitySet="ServicePoints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Services_ServicePoints" Association="Self.FK_Services_ServicePoints">
-            <End Role="ServicePoints" EntitySet="ServicePoints" />
-            <End Role="Services" EntitySet="Services" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tickets_AspNetUsers" Association="Self.FK_Tickets_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Tickets" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tickets_ServicePoints" Association="Self.FK_Tickets_ServicePoints">
-            <End Role="ServicePoints" EntitySet="ServicePoints" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
           <AssociationSet Name="FK_Tickets_Services" Association="Self.FK_Tickets_Services">
@@ -362,27 +306,17 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="ServicePoint">
-          <Key>
-            <PropertyRef Name="ServicePointsId" />
-          </Key>
-          <Property Name="ServicePointsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Services" Relationship="Self.FK_Services_ServicePoints" FromRole="ServicePoints" ToRole="Services" />
-          <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_ServicePoints" FromRole="ServicePoints" ToRole="Tickets" />
-          <Property Name="CurrentTicket" Type="Int32" />
-          <NavigationProperty Name="Ticket" Relationship="EQModel.FK_ServicePoints_Tickets1" FromRole="ServicePoint" ToRole="Ticket" />
-        </EntityType>
         <EntityType Name="Service">
           <Key>
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Telephone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="ServicePointsId" Type="Int32" />
-          <NavigationProperty Name="ServicePoint" Relationship="Self.FK_Services_ServicePoints" FromRole="Services" ToRole="ServicePoints" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Services" FromRole="Services" ToRole="Tickets" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentTicket" Type="Int32" />
+          <Property Name="LastTicket" Type="Int32" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -412,13 +346,10 @@
           <Property Name="Timestamp" Type="DateTime" Precision="3" />
           <Property Name="TimeServed" Type="DateTime" Precision="3" />
           <Property Name="StateId" Type="Int32" />
-          <Property Name="ServicePointsId" Type="Int32" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Tickets_AspNetUsers" FromRole="Tickets" ToRole="AspNetUsers" />
-          <NavigationProperty Name="ServicePoint" Relationship="Self.FK_Tickets_ServicePoints" FromRole="Tickets" ToRole="ServicePoints" />
           <NavigationProperty Name="Service" Relationship="Self.FK_Tickets_Services" FromRole="Tickets" ToRole="Services" />
           <NavigationProperty Name="State" Relationship="Self.FK_Tickets_State" FromRole="Tickets" ToRole="State" />
-          <Property Name="TicketNumber" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ServicePoints" Relationship="EQModel.FK_ServicePoints_Tickets1" FromRole="Ticket" ToRole="ServicePoint" />
+          <Property Name="TicketNumber" Type="Int32" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -460,30 +391,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Services_ServicePoints">
-          <End Role="ServicePoints" Type="Self.ServicePoint" Multiplicity="0..1" />
-          <End Role="Services" Type="Self.Service" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServicePoints">
-              <PropertyRef Name="ServicePointsId" />
-            </Principal>
-            <Dependent Role="Services">
-              <PropertyRef Name="ServicePointsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tickets_ServicePoints">
-          <End Role="ServicePoints" Type="Self.ServicePoint" Multiplicity="0..1" />
-          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServicePoints">
-              <PropertyRef Name="ServicePointsId" />
-            </Principal>
-            <Dependent Role="Tickets">
-              <PropertyRef Name="ServicePointsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tickets_Services">
           <End Role="Services" Type="Self.Service" Multiplicity="0..1" />
           <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
@@ -518,7 +425,6 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="ServicePoints" EntityType="Self.ServicePoint" />
           <EntitySet Name="Services" EntityType="Self.Service" />
           <EntitySet Name="States" EntityType="Self.State" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
@@ -535,14 +441,6 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK_Services_ServicePoints" Association="Self.FK_Services_ServicePoints">
-            <End Role="ServicePoints" EntitySet="ServicePoints" />
-            <End Role="Services" EntitySet="Services" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tickets_ServicePoints" Association="Self.FK_Tickets_ServicePoints">
-            <End Role="ServicePoints" EntitySet="ServicePoints" />
-            <End Role="Tickets" EntitySet="Tickets" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tickets_Services" Association="Self.FK_Tickets_Services">
             <End Role="Services" EntitySet="Services" />
             <End Role="Tickets" EntitySet="Tickets" />
@@ -555,23 +453,7 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK_ServicePoints_Tickets1" Association="EQModel.FK_ServicePoints_Tickets1">
-            <End Role="Ticket" EntitySet="Tickets" />
-            <End Role="ServicePoint" EntitySet="ServicePoints" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_ServicePoints_Tickets1">
-          <End Type="EQModel.Ticket" Role="Ticket" Multiplicity="0..1" />
-          <End Type="EQModel.ServicePoint" Role="ServicePoint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket">
-              <PropertyRef Name="TicketId" />
-            </Principal>
-            <Dependent Role="ServicePoint">
-              <PropertyRef Name="CurrentTicket" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -635,22 +517,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ServicePoints">
-            <EntityTypeMapping TypeName="EQModel.ServicePoint">
-              <MappingFragment StoreEntitySet="ServicePoints">
-                <ScalarProperty Name="CurrentTicket" ColumnName="CurrentTicket" />
-                <ScalarProperty Name="ServicePointsId" ColumnName="ServicePointsId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Services">
             <EntityTypeMapping TypeName="EQModel.Service">
               <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="LastTicket" ColumnName="LastTicket" />
+                <ScalarProperty Name="CurrentTicket" ColumnName="CurrentTicket" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
-                <ScalarProperty Name="ServicePointsId" ColumnName="ServicePointsId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -683,7 +558,6 @@
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="TimeServed" ColumnName="TimeServed" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="ServicePointsId" ColumnName="ServicePointsId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -18,7 +18,13 @@
             @Html.DisplayNameFor(model => model.Telephone)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ServicePoint.Name)
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentTicket)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastTicket)
         </th>
         <th></th>
     </tr>
@@ -32,7 +38,13 @@
             @Html.DisplayFor(modelItem => item.Telephone)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ServicePoint.Name)
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentTicket)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastTicket)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ServiceId }) |

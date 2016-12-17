@@ -30,7 +30,6 @@ namespace EQ.Models
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<ServicePoint> ServicePoints { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

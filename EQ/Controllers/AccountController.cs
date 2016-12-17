@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EQ.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Security.Principal;
 
 namespace EQ.Controllers
 {
@@ -51,7 +53,14 @@ namespace EQ.Controllers
                 _userManager = value;
             }
         }
-
+        [Authorize]
+        static public string UserName(IIdentity identity)
+        {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var currentUser = manager.FindById(identity.GetUserId());
+            var name = currentUser.Name;
+            return name.ToString();
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -79,7 +88,13 @@ namespace EQ.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        //var user = await UserManager.FindByIdAsync(User.Identity.GetUserId().ToString());
+                        //var UserRole = await UserManager.GetRolesAsync(User.Identity.GetUserId().ToString());
+                        returnUrl = "/User/Index";                   
+                        return RedirectToLocal(returnUrl);
+                    }
+                    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -155,15 +170,19 @@ namespace EQ.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    result = await UserManager.AddToRoleAsync(user.Id, "User");
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    return RedirectToAction("Index", "Home");
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 AddErrors(result);
             }
@@ -402,7 +421,6 @@ namespace EQ.Controllers
         {
             return View();
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

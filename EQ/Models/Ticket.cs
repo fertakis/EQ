@@ -14,26 +14,16 @@ namespace EQ.Models
     
     public partial class Ticket
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ticket()
-        {
-            this.ServicePoints = new HashSet<ServicePoint>();
-        }
-    
         public int TicketId { get; set; }
         public string AspNetUserId { get; set; }
         public Nullable<int> ServiceId { get; set; }
         public Nullable<System.DateTime> Timestamp { get; set; }
         public Nullable<System.DateTime> TimeServed { get; set; }
         public Nullable<int> StateId { get; set; }
-        public Nullable<int> ServicePointsId { get; set; }
-        public int TicketNumber { get; set; }
+        public Nullable<int> TicketNumber { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual ServicePoint ServicePoint { get; set; }
         public virtual Service Service { get; set; }
         public virtual State State { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ServicePoint> ServicePoints { get; set; }
     }
 }

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EQ.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace EQ.Controllers
 {
@@ -14,11 +16,18 @@ namespace EQ.Controllers
     {
         private EQEntities db = new EQEntities();
 
+        [Authorize]
         // GET: Tickets
         public ActionResult Index()
         {
-            var tickets = db.Tickets.Include(t => t.AspNetUser).Include(t => t.ServicePoint).Include(t => t.Service).Include(t => t.State);
-            return View(tickets.ToList());
+
+            //ApplicationDbContext context = new ApplicationDbContext();
+            //var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var userID = User.Identity.GetUserId();
+            //var tickets = db.Tickets.Include(t => t.AspNetUser).Include(t => t.Service).Include(t => t.State);
+            var tickets = db.Tickets.Where(t => t.AspNetUserId == userID );
+            var activetickets = tickets.Where(t => t.State.StateName.ToString() == "Pending");
+            return View(activetickets.ToList());
         }
 
         // GET: Tickets/Details/5
@@ -36,14 +45,43 @@ namespace EQ.Controllers
             return View(ticket);
         }
 
+        //// GET: Tickets/Create
+        //public ActionResult Create()
+        //{
+        //    ViewBag.AspNetUserId = new SelectList(db.AspNetUsers, "Id", "Email");
+        //    ViewBag.ServiceId = new SelectList(db.Services, "ServiceId", "Name");
+        //    ViewBag.StateId = new SelectList(db.States, "StateId", "StateName");
+        //    return View();
+        //}
+
+        //// POST: Tickets/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "TicketId,AspNetUserId,ServiceId,Timestamp,TimeServed,StateId,TicketNumber")] Ticket ticket)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Tickets.Add(ticket);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.AspNetUserId = new SelectList(db.AspNetUsers, "Id", "Email", ticket.AspNetUserId);
+        //    ViewBag.ServiceId = new SelectList(db.Services, "ServiceId", "Name", ticket.ServiceId);
+        //    ViewBag.StateId = new SelectList(db.States, "StateId", "StateName", ticket.StateId);
+        //    return View(ticket);
+        //}
         // GET: Tickets/Create
         public ActionResult Create()
         {
+            Ticket model = new Ticket();
+            model.Timestamp = DateTime.Now;
             ViewBag.AspNetUserId = new SelectList(db.AspNetUsers, "Id", "Email");
-            ViewBag.ServicePointsId = new SelectList(db.ServicePoints, "ServicePointsId", "Name");
             ViewBag.ServiceId = new SelectList(db.Services, "ServiceId", "Name");
             ViewBag.StateId = new SelectList(db.States, "StateId", "StateName");
-            return View();
+            return View(model);
         }
 
         // POST: Tickets/Create
@@ -51,22 +89,23 @@ namespace EQ.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TicketId,AspNetUserId,ServiceId,Timestamp,TimeServed,StateId,ServicePointsId")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "TicketId,AspNetUserId,ServiceId,Timestamp,TimeServed,StateId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
+                Service service = db.Services.Find(ticket.ServiceId);
+                ticket.TicketNumber = ++service.LastTicket;
+                db.Entry(service).State = EntityState.Modified;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.AspNetUserId = new SelectList(db.AspNetUsers, "Id", "Email", ticket.AspNetUserId);
-            ViewBag.ServicePointsId = new SelectList(db.ServicePoints, "ServicePointsId", "Name", ticket.ServicePointsId);
             ViewBag.ServiceId = new SelectList(db.Services, "ServiceId", "Name", ticket.ServiceId);
             ViewBag.StateId = new SelectList(db.States, "StateId", "StateName", ticket.StateId);
             return View(ticket);
         }
-
         // GET: Tickets/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -80,7 +119,6 @@ namespace EQ.Controllers
                 return HttpNotFound();
             }
             ViewBag.AspNetUserId = new SelectList(db.AspNetUsers, "Id", "Email", ticket.AspNetUserId);
-            ViewBag.ServicePointsId = new SelectList(db.ServicePoints, "ServicePointsId", "Name", ticket.ServicePointsId);
             ViewBag.ServiceId = new SelectList(db.Services, "ServiceId", "Name", ticket.ServiceId);
             ViewBag.StateId = new SelectList(db.States, "StateId", "StateName", ticket.StateId);
             return View(ticket);
@@ -91,7 +129,7 @@ namespace EQ.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TicketId,AspNetUserId,ServiceId,Timestamp,TimeServed,StateId,ServicePointsId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "TicketId,AspNetUserId,ServiceId,Timestamp,TimeServed,StateId,TicketNumber")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +138,6 @@ namespace EQ.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.AspNetUserId = new SelectList(db.AspNetUsers, "Id", "Email", ticket.AspNetUserId);
-            ViewBag.ServicePointsId = new SelectList(db.ServicePoints, "ServicePointsId", "Name", ticket.ServicePointsId);
             ViewBag.ServiceId = new SelectList(db.Services, "ServiceId", "Name", ticket.ServiceId);
             ViewBag.StateId = new SelectList(db.States, "StateId", "StateName", ticket.StateId);
             return View(ticket);

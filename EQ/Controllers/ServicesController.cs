@@ -17,8 +17,7 @@ namespace EQ.Controllers
         // GET: Services
         public ActionResult Index()
         {
-            var services = db.Services.Include(s => s.ServicePoint);
-            return View(services.ToList());
+            return View(db.Services.ToList());
         }
 
         // GET: Services/Details/5
@@ -39,7 +38,6 @@ namespace EQ.Controllers
         // GET: Services/Create
         public ActionResult Create()
         {
-            ViewBag.ServicePointsId = new SelectList(db.ServicePoints, "ServicePointsId", "Name");
             return View();
         }
 
@@ -48,7 +46,7 @@ namespace EQ.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ServiceId,Name,Telephone,ServicePointsId")] Service service)
+        public ActionResult Create([Bind(Include = "ServiceId,Name,Telephone,Address,CurrentTicket,LastTicket")] Service service)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +55,6 @@ namespace EQ.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ServicePointsId = new SelectList(db.ServicePoints, "ServicePointsId", "Name", service.ServicePointsId);
             return View(service);
         }
 
@@ -73,16 +70,29 @@ namespace EQ.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ServicePointsId = new SelectList(db.ServicePoints, "ServicePointsId", "Name", service.ServicePointsId);
             return View(service);
         }
-
+        public ActionResult Next(int? id)
+        {
+            Service service = db.Services.Find(id);
+            var tickets = db.Tickets.Where(t => t.TicketNumber == service.CurrentTicket);
+            Ticket ticket = tickets.Where(t => t.ServiceId == id).First();
+            ticket.StateId = 4;
+            service.CurrentTicket++;
+            tickets = db.Tickets.Where(t => t.TicketNumber == service.CurrentTicket);
+            ticket = tickets.Where(t => t.ServiceId == id).First();
+            ticket.StateId = 1;
+            db.Entry(service).State = EntityState.Modified;
+            db.Entry(ticket).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // POST: Services/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ServiceId,Name,Telephone,ServicePointsId")] Service service)
+        public ActionResult Edit([Bind(Include = "ServiceId,Name,Telephone,Address,CurrentTicket,LastTicket")] Service service)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +100,6 @@ namespace EQ.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ServicePointsId = new SelectList(db.ServicePoints, "ServicePointsId", "Name", service.ServicePointsId);
             return View(service);
         }
 
