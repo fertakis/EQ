@@ -10,6 +10,7 @@ using EQ.Models;
 
 namespace EQ.Controllers
 {
+    [Authorize]
     public class ServicesController : Controller
     {
         private EQEntities db = new EQEntities();
@@ -19,7 +20,21 @@ namespace EQ.Controllers
         {
             return View(db.Services.ToList());
         }
-
+        // GET: Services/Details/5
+        public ActionResult Current(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Service service = db.Services.Find(id);
+            if (service == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View(service);
+        }
         // GET: Services/Details/5
         public ActionResult Details(int? id)
         {
@@ -72,6 +87,7 @@ namespace EQ.Controllers
             }
             return View(service);
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult Next(int? id)
         {
             Service service = db.Services.Find(id);
