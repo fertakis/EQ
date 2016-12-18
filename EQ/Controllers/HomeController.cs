@@ -10,7 +10,15 @@ namespace EQ.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.IsInRole("Admin")) {
+                ViewBag.Role = "Admin";
+                return View("~/Views/Tickets/AdminView");
+            } else if (User.IsInRole("User")) {
+                ViewBag.Role = "User";
+                return View("~/Views/Tickets/Create");
+            } else {
+                return View();
+            }
         }
 
         public ActionResult About()
