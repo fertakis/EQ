@@ -21,6 +21,7 @@ namespace EQ.Controllers
             return View(db.Services.ToList());
         }
         // GET: Services/Details/5
+        [AllowAnonymous]
         public ActionResult Current(int? id)
         {
             if (id == null)
