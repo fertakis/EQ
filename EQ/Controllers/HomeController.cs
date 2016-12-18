@@ -12,10 +12,10 @@ namespace EQ.Controllers
         {
             if (User.IsInRole("Admin")) {
                 ViewBag.Role = "Admin";
-                return View("~/Views/Tickets/AdminView");
+                return View("~/Views/Tickets/AdminView.cshtml");
             } else if (User.IsInRole("User")) {
                 ViewBag.Role = "User";
-                return View("~/Views/Tickets/Create");
+                return View("~/Views/Tickets/Create.cshtml");
             } else {
                 return View();
             }
