@@ -1,11 +1,6 @@
 ﻿
 
 <div class="responsiveFullPageDiv">
-<h4 style="text-align: center;">Επόμενο Νούμερο</h4>
-    <hr/>
-    <button type="button" class="btn btn-default btn-lg col-xs-8" style="height:200px;  margin-left: 16.666666666666664%; border-radius:100px; background-color:greenyellow" >
-        <h1>
-            @Html.ActionLink("Next", "Next/1", "Services")
-        </h1>
-    </button>
+    <h4 style="text-align: center;">Επόμενο Νούμερο</h4>
+    @Html.ActionLink("Next", "Next/1", "Services",new { @class="btn btn-default btn-lg col-xs-8", style = "text-align:center; line-height:1.7; vertical-align:middle; font-size: 100px; height:200px;  margin-left: 16.666666666666664%; border-radius:100px; background-color:greenyellow" })
 </div>
