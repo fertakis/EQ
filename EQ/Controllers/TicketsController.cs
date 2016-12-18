@@ -173,6 +173,12 @@ namespace EQ.Controllers
             return RedirectToAction("Index");
         }
 
+        //Get :Tickets/AdminView
+        public ActionResult AdminView()
+        {
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

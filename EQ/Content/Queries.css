@@ -1,0 +1,156 @@
+﻿﻿@media screen and (max-width:800px){
+    .dropbtn{
+      font-size: 12px !important;
+      padding:12px !important;
+    }
+    .dropdown{
+      width: 15% !important;
+    }
+    .dropdown-content{
+      width: 615% !important;
+      font-size: 12px !important;
+    }
+    .searchBar[type=text]{
+      font-size: 12px !important;
+      padding: 12px 10px !important;
+      width:30% !important;
+    }
+    .drpDownSelect{
+      width: 18% !important;
+      padding: 12px 10px !important;
+      font-size: 13px !important;
+      margin-left: 55% !important;
+    }
+    .searchResults{
+      width:86% !important;
+      margin-left: 7% !important;
+      margin-top: 10% !important;
+    }
+    .responsiveBookImg {
+      width: 49.99999% !important;
+      margin: 6px 0 !important;
+    }
+    .responsiveFullPageDiv{
+        width:60% !important;
+        margin-left:20% !important;
+        margin-top:5% !important;
+    }
+    .searchImageTitle{
+      height: 65px !important;
+    }
+    .modal{
+      padding-top: 9% !important;
+    }
+    .modal-content {
+      width: 78% !important;
+      margin-left: 11% !important;
+    }
+
+}
+@media screen and (min-width:801px) and (max-width:1350px){
+    .dropbtn{
+      font-size: 15px !important;
+      padding:14px !important;
+    }
+    .dropdown-content{
+      font-size: 12px !important;
+    }
+    .searchBar[type=text]{
+      font-size: 14px !important;
+      width:36% !important;
+    }
+    .drpDownSelect{
+      width: 12% !important; 
+      font-size: 16.5px !important;
+      margin-left: 61% !important;
+       padding: 12px 20px !important;
+    }
+    .searchResults{
+      width:75% !important;
+      margin-left: 12.5% !important;
+      margin-top: 8% !important;
+    }
+    .responsiveFullPageDiv{
+        width:50% !important;
+        margin-left:25% !important;
+        margin-top:5% !important;
+    }
+    .modal{
+      padding-top: 7% !important;
+    }
+    .modal-content {
+      width: 65% !important;
+      margin-left: 17.5% !important;
+    }
+}
+@media screen and (max-width:851px){
+  .col-xs-7{
+      width:83.33333333333334% !important;
+  }
+  .col-xs-3{
+      width:50% !important;
+  }
+  .rating-dropdown-content {
+    bottom: 70% !important;
+  }
+  .col-xs-offset-3{
+    margin-left: 0px !important;
+  }
+  .col-xs-offset-9{
+    margin-left: 50% !important;
+  }
+}
+@media screen and (min-width:801px) and (max-width:950px){
+  .responsiveBookImg {
+      width: 33.33333% !important;
+  }
+}
+@media screen and (min-width:951px) and (max-width:1150px){
+  .responsiveBookImg {
+      width: 24.99999% !important;
+  }
+}
+@media screen and (min-width:1151px) and (max-width:1350px){
+  .responsiveBookImg {
+      width: 19.99999% !important;
+  }
+}
+
+@media screen and (max-width:550px){
+    .dropdown{
+      width: 20% !important;
+    }
+    .dropdown-content{
+      width: 440% !important;
+    }
+    .searchResults{
+      width:90% !important;
+      margin-left: 5% !important;
+      margin-top: 15% !important;
+    }
+    .responsiveBookImg {
+        width: 100% !important;
+        padding:1% 2% !important;
+    }
+    .responsiveFullPageDiv{
+        width:90% !important;
+        margin-left:5% !important;
+        margin-top: 15% !important;
+    }
+    .searchImageTitle{
+      height: 50px !important;
+    }
+    .modal{
+      padding-top: 14% !important;
+    }
+    .modal-content {
+      width: 85% !important;
+      margin-left: 7.5% !important;
+    }
+}
+@media screen and (max-width:400px){
+    .dropdown-content{
+      width: 430% !important;
+    }
+}
+

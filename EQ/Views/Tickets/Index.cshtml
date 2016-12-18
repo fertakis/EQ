@@ -1,63 +1,42 @@
 ﻿@model IEnumerable<EQ.Models.Ticket>
 
-@{
-    ViewBag.Title = "Index";
-}
+<div class="responsiveFullPageDiv">
+    <h2>My Tickets</h2>
 
-<h2>Index</h2>
+    <table class="table">
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Service.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State.StateName)
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeServed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TicketNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AspNetUser.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Service.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State.StateName)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State.StateName)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default">
+                        @Html.ActionLink("Θέαση", "Details", null, new { @style = " text-decoration:none;" }, new { id = item.TicketId })
+                    </button>
+                </td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeServed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TicketNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Service.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State.StateName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TicketId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TicketId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TicketId })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
+    <p style="float:right;">
+        <button type="button" class="btn btn-default">
+            @Html.ActionLink("Καινούργιο νούμερο", "Create",null, new { @style = " text-decoration:none;" })
+        </button>
+    </p>
+</div>

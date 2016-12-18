@@ -20,7 +20,7 @@ namespace EQ.Controllers
                 var user = User.Identity;
                 if (isAdminUser())
                 {
-                    return RedirectToAction("Index", "Tickets");
+                    return RedirectToAction("AdminView", "Tickets");
                 }
                 return RedirectToAction("Create", "Tickets");
             }
