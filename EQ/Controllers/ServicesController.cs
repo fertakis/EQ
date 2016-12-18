@@ -105,7 +105,7 @@ namespace EQ.Controllers
             db.Entry(service).State = EntityState.Modified;
             db.Entry(ticket).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","User");
         }
         // POST: Services/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
