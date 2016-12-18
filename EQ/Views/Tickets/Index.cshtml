@@ -9,9 +9,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Service.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.State.StateName)
-            </th>
+            
             <th></th>
         </tr>
 
@@ -22,12 +20,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Service.Name)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.State.StateName)
-                </td>
+               
                 <td>
                     <button type="button" class="btn btn-default">
-                        @Html.ActionLink("Θέαση", "Details", null, new { @style = " text-decoration:none;" }, new { id = item.TicketId })
+                        @Html.ActionLink("Θέαση", "Details", new { id = item.TicketId })
                     </button>
                 </td>
             </tr>
