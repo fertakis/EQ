@@ -1,4 +1,4 @@
-﻿﻿@media screen and (max-width:800px){
+﻿@media screen and (max-width:800px){
     .dropbtn{
       font-size: 12px !important;
       padding:12px !important;
@@ -33,7 +33,7 @@
     .responsiveFullPageDiv{
         width:60% !important;
         margin-left:20% !important;
-        margin-top:5% !important;
+        margin-top:6% !important;
     }
     .searchImageTitle{
       height: 65px !important;
@@ -73,7 +73,7 @@
     .responsiveFullPageDiv{
         width:50% !important;
         margin-left:25% !important;
-        margin-top:5% !important;
+        margin-top:6% !important;
     }
     .modal{
       padding-top: 7% !important;
@@ -135,7 +135,7 @@
     .responsiveFullPageDiv{
         width:90% !important;
         margin-left:5% !important;
-        margin-top: 15% !important;
+        margin-top: 18% !important;
     }
     .searchImageTitle{
       height: 50px !important;
