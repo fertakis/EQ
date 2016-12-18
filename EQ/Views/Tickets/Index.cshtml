@@ -26,17 +26,15 @@
                     @Html.DisplayFor(modelItem => item.TicketNumber)
                 </td>
                 <td>
-                    <button type="button" class="btn btn-default">
-                        @Html.ActionLink("Θέαση", "Details", new { id = item.TicketId })
-                    </button>
+                    
+                        @Html.ActionLink("Θέαση", "Details", new { id = item.TicketId }, new { @class = "btn btn-default btn-lg", style = "text-align:center; line-height:1.7;  font-size: 11px;  background-color:lightblue;" })
+                    
                 </td>
             </tr>
         }
 
     </table>
     <p style="float:right;">
-        <button type="button" class="btn btn-default">
-            @Html.ActionLink("Καινούργιο νούμερο", "Create",null, new { @style = " text-decoration:none;" })
-        </button>
+            @Html.ActionLink("Καινούργιο νούμερο", "Create",null, new { @class = "btn btn-default btn-lg", style = "text-align:center; line-height:1.7;  font-size: 11px;  background-color:greenyellow; margin-right:5%;" })
     </p>
 </div>

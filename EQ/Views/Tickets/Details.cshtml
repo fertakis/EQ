@@ -5,7 +5,7 @@
     <div>
         <h4>Ticket for @Html.DisplayFor(model => model.Service.Name)</h4>
         <hr />
-        εκτιμομενος χρονοσ εξυπηρετησης : @ViewBag.ETA
+        εκτιμόμενος χρόνος εξυπηρέτησης : @ViewBag.ETA
         λεπτά
         <br />
         @Html.DisplayNameFor(model => model.TicketNumber) 
@@ -14,7 +14,8 @@
         <br/>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.TicketId }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("OK", "Index",null, new { @class = "btn btn-default btn-lg", style = "text-align:center; line-height:1.7; vertical-align:middle; font-size: 20px; margin-top:5%; background-color:lightblue;" })
+
+
     </p>
 </div>
