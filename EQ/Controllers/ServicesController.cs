@@ -49,7 +49,7 @@ namespace EQ.Controllers
             }
             return View(service);
         }
-
+        [Authorize(Roles ="Admin")]
         // GET: Services/Create
         public ActionResult Create()
         {
@@ -59,12 +59,15 @@ namespace EQ.Controllers
         // POST: Services/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ServiceId,Name,Telephone,Address,CurrentTicket,LastTicket")] Service service)
+        public ActionResult Create([Bind(Include = "ServiceId,Name,Telephone,Address")] Service service)
         {
             if (ModelState.IsValid)
             {
+                service.CurrentTicket = 0;
+                service.LastTicket = 0;
                 db.Services.Add(service);
                 db.SaveChanges();
                 return RedirectToAction("Index");

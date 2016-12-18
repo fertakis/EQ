@@ -10,7 +10,9 @@
                 @Html.DisplayNameFor(model => model.Service.Name)
             </th>
             
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketNumber)
+            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -20,7 +22,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Service.Name)
                 </td>
-               
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketNumber)
+                </td>
                 <td>
                     <button type="button" class="btn btn-default">
                         @Html.ActionLink("Θέαση", "Details", new { id = item.TicketId })
