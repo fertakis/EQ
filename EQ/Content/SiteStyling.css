@@ -1,5 +1,4 @@
 ﻿body {
-    background-color: lightgray;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -7,8 +6,12 @@
   right: 0;
   padding: 0;
   margin: 0;
+  
+  background-image: url(Athens-Widescreen-Background-Wallpaper.jpeg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  background-image: url("http://wallpapers.ae/wp-content/uploads/2014/09/Athens-Widescreen-Background-Wallpaper.jpeg");
 }
 .homediv{
   float:left;
